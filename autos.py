@@ -22,7 +22,7 @@ def get_db():
 
 
 @router.get("/autos", response_model=List[schemas.AutoModel])
-def get_autos(
+def get(
         db: Session = Depends(get_db),
         model: Optional[str] = None,
         year_of_production: Optional[int] = None,
