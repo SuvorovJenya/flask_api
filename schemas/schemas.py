@@ -2,7 +2,7 @@ from typing import Optional, Union
 from pydantic import BaseModel
 
 
-class AutoModel(BaseModel):
+class AutoSchema(BaseModel):
     id: Optional[int]
     model: str
     year_of_production: int
@@ -15,16 +15,15 @@ class AutoModel(BaseModel):
         orm_mode = True
 
 
-class UserModel(BaseModel):
+class UserSchema(BaseModel):
     id: Optional[int]
     username: str
     password: str
 
 
-class Token(BaseModel):
+class TokenSchema(BaseModel):
     access_token: str
-    token_type: str
 
 
-class TokenData(BaseModel):
-    username: Union[str, None] = None
+class TokenPayloadSchema(BaseModel):
+    id: Union[str, None] = None
