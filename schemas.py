@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 from pydantic import BaseModel
 
 
@@ -13,3 +13,18 @@ class AutoModel(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class UserModel(BaseModel):
+    id: Optional[int]
+    username: str
+    password: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Union[str, None] = None
