@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from database import Base
+from database.db import Base
 
 
 class AutoModel(Base):
@@ -12,11 +12,3 @@ class AutoModel(Base):
     body_type = Column(String)
     color = Column(String)
     price = Column(Integer)
-
-
-class UserModel(Base):
-    __tablename__ = 'user'
-
-    id = Column(Integer, primary_key=True)
-    username = Column(String)
-    password = Column(String)
