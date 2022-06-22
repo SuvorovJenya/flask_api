@@ -1,14 +1,10 @@
-from sqlalchemy import Column, Integer, String
-from database.db import Base
+from sqlalchemy import Column, String
+from database.models.TransportModel import TransportModel
 
 
-class AutoModel(Base):
-    __tablename__ = 'auto'
+class AutoModel(TransportModel):
+    complete_set = Column(String)
 
-    id = Column(Integer, primary_key=True)
-    model = Column(String)
-    year_of_production = Column(Integer)
-    mileage = Column(Integer)
-    body_type = Column(String)
-    color = Column(String)
-    price = Column(Integer)
+    __mapper_args__ = {
+        "polymorphic_identity": "auto",
+    }

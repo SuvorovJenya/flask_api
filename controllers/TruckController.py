@@ -2,17 +2,16 @@ from fastapi import Depends, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from fastapi.security import OAuth2PasswordBearer
-from database.models.AutoModel import AutoModel
+from database.models.TruckModel import TruckModel
 from utils.get_current_db import get_db
-from schemas.AutoSchemas import AutoSchemas
+from schemas.TruckSchemas import TruckSchemas
 from service.TransportService import get_transport_item, get_transport_by_id, create_transport
 
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
-auto_router = APIRouter()
+truck_router = APIRouter()
 
 
-@auto_router.get("/autos", response_model=List[AutoSchemas])
+@truck_router.get("/truck", response_model=List[TruckSchemas])
 def get(
     db: Session = Depends(get_db),
     model: Optional[str] = None,
@@ -21,7 +20,9 @@ def get(
     body_type: Optional[str] = None,
     color: Optional[str] = None,
     price: Optional[int] = None,
-    complete_set: Optional[int] = None,
+    lifting_capacity: Optional[int] = None,
+    suspension_chassis: Optional[str] = None,
+    wheel_arrangement: Optional[int] = None,
 ):
     return get_transport_item(
         db,
@@ -31,25 +32,27 @@ def get(
         body_type=body_type,
         color=color,
         price=price,
-        complete_set=complete_set,
-        table_name=AutoModel,
+        lifting_capacity=lifting_capacity,
+        suspension_chassis=suspension_chassis,
+        wheel_arrangement=wheel_arrangement,
+        table_name=TruckModel,
     )
 
 
-@auto_router.get("/autos/{id}", response_model=AutoSchemas)
+@truck_router.get("/truck/{id}", response_model=TruckSchemas)
 def get_one(
         id: int,
         db: Session = Depends(get_db),
 ):
-    auto = get_transport_by_id(db, id=id, table_name=AutoModel)
-    if auto is None:
-        raise HTTPException(status_code=404, detail="Auto not found")
-    return auto
+    truck = get_transport_by_id(db, id=id, table_name=TruckModel)
+    if truck is None:
+        raise HTTPException(status_code=404, detail="Truck not found")
+    return truck
 
 
-@auto_router.post("/autos")
-def create_auto(
-        item: AutoSchemas,
+@truck_router.post("/truck")
+def create_truck(
+        item: TruckSchemas,
         db: Session = Depends(get_db),
 ):
-    return create_transport(db=db, item=item, table_name=AutoModel)
+    return create_transport(db=db, item=item, table_name=TruckModel)
