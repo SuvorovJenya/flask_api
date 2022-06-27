@@ -12,9 +12,9 @@ class TransportModel(Base):
     body_type = Column(String)
     color = Column(String)
     price = Column(Integer)
-    orm_type = Column(String(50))
+    type = Column(String(50))
 
     __mapper_args__ = {
-        "polymorphic_on": orm_type,
+        "polymorphic_on": type,
         "polymorphic_identity": "transport",
     }

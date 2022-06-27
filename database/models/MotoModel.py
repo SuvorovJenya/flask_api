@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer
+from database.enums.TransportType import TransportType
 from database.models.TransportModel import TransportModel
+from database.enums.TransportType import TransportType
 
 
 class MotoModel(TransportModel):
@@ -8,5 +10,5 @@ class MotoModel(TransportModel):
     tacts = Column(Integer)
 
     __mapper_args__ = {
-        "polymorphic_identity": "moto",
+        "polymorphic_identity": TransportType['MOTO'],
     }
