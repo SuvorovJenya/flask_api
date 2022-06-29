@@ -5,23 +5,24 @@ from database.models.TruckModel import TruckModel
 from database.enums.TransportType import TransportType
 
 
-def get_transport_item(
+def get_transport(
     db: Session,
     args,
-    model_type,
+    type,
 ):
-    model = _getModelByType(model_type)
-    return db.query(model).filter_by(**args.dict(exclude_none=True)).all()
+    model = _getModelByType(type)
+    return db.query(model).\
+        filter_by(**args.dict(exclude_none=True)).all()
 
 
-def get_transport_by_id(db: Session, id: int, model_type):
-    model = _getModelByType(model_type)
+def get_transport_by_id(db: Session, id: int, type):
+    model = _getModelByType(type)
     return db.query(model).\
         filter(model.id == id).first()
 
 
-def create_transport(db: Session, item, model_type):
-    model = _getModelByType(model_type)
+def create_transport(db: Session, item, type):
+    model = _getModelByType(type)
     db_item = model(**item.dict())
     db.add(db_item)
     db.commit()
@@ -29,13 +30,13 @@ def create_transport(db: Session, item, model_type):
     return db_item
 
 
-def _getModelByType(model_type):
-    transporttypefabric = {
+def _getModelByType(type):
+    _transporttypefabric = {
         TransportType['MOTO']: MotoModel,
         TransportType['AUTOS']: AutoModel,
         TransportType['TRUCK']: TruckModel,
     }
-    if TransportType.get(model_type) is None:
-        return 'Error'
+    if TransportType.get(type) is None:
+        return 'Model not found'
     else:
-        return transporttypefabric[model_type]
+        return _transporttypefabric[type]

@@ -2,7 +2,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class UserSchemas(BaseModel):
+class UserSchema(BaseModel):
     id: Optional[int]
     username: str
     password: str

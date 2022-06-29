@@ -2,7 +2,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class TruckSchemas(BaseModel):
+class TruckSchema(BaseModel):
     id: Optional[int]
     model: str
     year_of_production: int

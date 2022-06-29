@@ -3,10 +3,11 @@ from sqlalchemy.orm import Session
 from typing import List
 from fastapi.security import OAuth2PasswordBearer
 from utils.get_current_db import get_db
-from schemas.AutoSchemas import AutoSchemas
-from schemas.TransportSchemas import TransportSchemas
+from schemas.AutoSchema import AutoSchema
+from database.enums.TransportType import TransportType
+from schemas.TransportSchema import TransportSchema
 from service.TransportService import (
-    get_transport_item,
+    get_transport,
     get_transport_by_id,
     create_transport,
 )
@@ -15,24 +16,24 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 auto_router = APIRouter()
 
 
-@auto_router.get("/autos", response_model=List[AutoSchemas])
+@auto_router.get("/autos", response_model=List[AutoSchema])
 def get(
     db: Session = Depends(get_db),
-    args: TransportSchemas = Depends(),
+    args: TransportSchema = Depends(),
 ):
-    return get_transport_item(
+    return get_transport(
         db,
         args=args,
-        model_type='AUTOS',
+        type=TransportType['AUTOS'],
     )
 
 
-@auto_router.get("/autos/{id}", response_model=AutoSchemas)
+@auto_router.get("/autos/{id}", response_model=AutoSchema)
 def get_one(
         id: int,
         db: Session = Depends(get_db),
 ):
-    auto = get_transport_by_id(db, id=id, model_type='AUTOS')
+    auto = get_transport_by_id(db, id=id, type=TransportType['AUTOS'])
     if auto is None:
         raise HTTPException(status_code=404, detail="Auto not found")
     return auto
@@ -40,7 +41,7 @@ def get_one(
 
 @auto_router.post("/autos")
 def create_auto(
-        item: AutoSchemas,
+        item: AutoSchema,
         db: Session = Depends(get_db),
 ):
-    return create_transport(db=db, item=item, model_type='AUTOS')
+    return create_transport(db=db, item=item, type=TransportType['AUTOS'])

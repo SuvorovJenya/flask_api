@@ -2,7 +2,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class TransportSchemas(BaseModel):
+class TransportSchema(BaseModel):
     model: Optional[str]
     year_of_production: Optional[int]
     body_type: Optional[str]

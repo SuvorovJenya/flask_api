@@ -1,10 +1,9 @@
 import os
-import settings
 from jose import JWTError, jwt
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer
-from schemas.TokenSchemas import TokenDataSchemas
+from schemas.TokenSchema import TokenDataSchema
 from database.models.UserModel import UserModel
 from utils.get_current_db import get_db
 
@@ -46,7 +45,7 @@ def get_current_user(
             options={"verify_aud": False},
         )
         username: str = payload.get("userid")
-        token_data = TokenDataSchemas(username=username)
+        token_data = TokenDataSchema(username=username)
     except JWTError:
         raise credentials_exception
     user = db.query(UserModel).\

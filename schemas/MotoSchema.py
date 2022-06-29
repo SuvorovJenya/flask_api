@@ -2,7 +2,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class MotoSchemas(BaseModel):
+class MotoSchema(BaseModel):
     id: Optional[int]
     model: str
     year_of_production: int
