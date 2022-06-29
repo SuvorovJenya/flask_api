@@ -11,7 +11,10 @@ def get_transport_item(
     model_type,
 ):
     model = _getModelByType(model_type)
-    return db.query(model).filter(args.dict(exclude_none=True)).all()
+    print(args)
+    print(args.dict())
+    print("----------------")
+    return db.query(model).filter_by(**args.dict(exclude_none=True)).all()
 
 
 def get_transport_by_id(db: Session, id: int, model_type):
@@ -22,6 +25,8 @@ def get_transport_by_id(db: Session, id: int, model_type):
 
 def create_transport(db: Session, item, model_type):
     model = _getModelByType(model_type)
+    print(item)
+    print(item.dict())
     db_item = model(**item.dict())
     db.add(db_item)
     db.commit()
