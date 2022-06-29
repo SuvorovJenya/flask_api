@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 from typing import List
 from fastapi.security import OAuth2PasswordBearer
 from utils.get_current_db import get_db
-from schemas.MotoSchema import MotoSchema
 from database.enums.TransportType import TransportType
+from schemas.MotoSchema import MotoSchema
 from schemas.TransportSchema import TransportSchema
 from service.TransportService import (
     get_transport,

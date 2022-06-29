@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from typing import List
 from fastapi.security import OAuth2PasswordBearer
 from utils.get_current_db import get_db
+from database.enums.TransportType import TransportType
 from schemas.TruckSchema import TruckSchema
 from schemas.TransportSchema import TransportSchema
-from database.enums.TransportType import TransportType
 from service.TransportService import (
     get_transport,
     get_transport_by_id,
