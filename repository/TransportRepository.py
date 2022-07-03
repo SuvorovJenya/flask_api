@@ -4,19 +4,19 @@ from database.models.TruckModel import TruckModel
 from database.enums.TransportType import TransportType
 
 
-def get_transport_query(db, args, type):
+def get_transport(db, args, type):
     model = _getModelByType(type)
     return db.query(model).\
         filter_by(**args.dict(exclude_none=True)).all()
 
 
-def get_tansport_query_by_id(db, id, type):
+def get_transport_by_id(db, id, type):
     model = _getModelByType(type)
     return db.query(model).\
         filter(model.id == id).first()
 
 
-def add_item_to_model(db, item, type):
+def create_transport(db, item, type):
     model = _getModelByType(type)
     db_item = model(**item.dict())
     db.add(db_item)
