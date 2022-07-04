@@ -2,9 +2,9 @@ from typing import Union
 from pydantic import BaseModel
 
 
-class TokenSchemas(BaseModel):
+class TokenSchema(BaseModel):
     access_token: str
 
 
-class TokenDataSchemas(BaseModel):
+class TokenDataSchema(BaseModel):
     username: Union[str, None] = None

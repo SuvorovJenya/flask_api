@@ -4,7 +4,7 @@ from typing import List
 from fastapi.security import OAuth2PasswordBearer
 from utils.get_current_db import get_db
 from database.enums.TransportType import TransportType
-from schemas.AutoSchema import AutoSchema
+from schemas.MotoSchema import MotoSchema
 from schemas.TransportSchema import TransportSchema
 from service.TransportService import (
     get_transport,
@@ -13,10 +13,10 @@ from service.TransportService import (
 )
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
-auto_router = APIRouter()
+moto_router = APIRouter()
 
 
-@auto_router.get("/autos", response_model=List[AutoSchema])
+@moto_router.get("/moto", response_model=List[MotoSchema])
 def get(
     db: Session = Depends(get_db),
     args: TransportSchema = Depends(),
@@ -24,24 +24,24 @@ def get(
     return get_transport(
         db,
         args=args,
-        type=TransportType['AUTOS'],
+        type=TransportType['MOTO'],
     )
 
 
-@auto_router.get("/autos/{id}", response_model=AutoSchema)
+@moto_router.get("/moto/{id}", response_model=MotoSchema)
 def get_one(
         id: int,
         db: Session = Depends(get_db),
 ):
-    auto = get_transport_by_id(db, id=id, type=TransportType['AUTOS'])
-    if auto is None:
-        raise HTTPException(status_code=404, detail="Auto not found")
-    return auto
+    moto = get_transport_by_id(db, id=id, type=TransportType['MOTO'])
+    if moto is None:
+        raise HTTPException(status_code=404, detail="Moto not found")
+    return moto
 
 
-@auto_router.post("/autos")
-def create_auto(
-        item: AutoSchema,
+@moto_router.post("/moto")
+def create_moto(
+        item: MotoSchema,
         db: Session = Depends(get_db),
 ):
-    return create_transport(db=db, item=item, type=TransportType['AUTOS'])
+    return create_transport(db=db, item=item, type=TransportType['MOTO'])
